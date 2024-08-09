@@ -1,9 +1,19 @@
-use pdf::file::File as PdfFile;
-use pdf::object::{Object, Page};
-use pdf::primitive::Primitive;
+use pdf::file::File;
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
+mod test;
 
-    Ok(())
+fn main() {
 
+    let file_path = "example.pdf";
+
+    match File::open(file_path) {
+
+        Ok(pdf_file) => {
+            println!("Successfully opened the PDF file.");
+        },
+        Err(e) => {
+            eprintln!("Failed to open the PDF file: {}", e);
+        }
+
+    }
 }
