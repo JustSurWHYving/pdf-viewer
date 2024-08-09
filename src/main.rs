@@ -1,19 +1,16 @@
-use pdf::file::File;
+use lopdf::Document as Document;
+use std::fs::File as File;
 
-mod test;
+fn main(){
+    let file_path = "test.pdf";
+    let open = File::open(file_path);
+    let file = File::open("test.pdf");
+    let doc = Document::load(file)?;
 
-fn main() {
+    println!("Number of pages: {}", doc.get_num_pages());
+    println!("Metadata: {:?}", doc.get_info_dict());
 
-    let file_path = "example.pdf";
-
-    match File::open(file_path) {
-
-        Ok(pdf_file) => {
-            println!("Successfully opened the PDF file.");
-        },
-        Err(e) => {
-            eprintln!("Failed to open the PDF file: {}", e);
-        }
-
+    if let Some(page) = doc.get_page(0) {
+        println!("Page size: {:?}", page.get_media_box());
     }
 }
