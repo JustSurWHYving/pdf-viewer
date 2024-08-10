@@ -1,16 +1,12 @@
-use lopdf::Document as Document;
-use std::fs::File as File;
+use std::fs;
 
-fn main(){
+fn main() {
     let file_path = "test.pdf";
-    let open = File::open(file_path);
-    let file = File::open("test.pdf");
-    let doc = Document::load(file)?;
+    // --snip--
+    println!("In file {file_path}");
 
-    println!("Number of pages: {}", doc.get_num_pages());
-    println!("Metadata: {:?}", doc.get_info_dict());
+    let contents = fs::read_to_string(file_path)
+        .expect("Should have been able to read the file");
 
-    if let Some(page) = doc.get_page(0) {
-        println!("Page size: {:?}", page.get_media_box());
-    }
+    println!("With text:\n{contents}");
 }
